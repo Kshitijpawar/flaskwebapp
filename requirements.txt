@@ -9,6 +9,7 @@ click==6.7
 colorama==0.4.3
 decorator==4.4.2
 defusedxml==0.6.0
+dnspython==1.16.0
 entrypoints==0.3
 Flask==1.0
 Flask-Bcrypt==0.7.1
