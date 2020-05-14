@@ -180,7 +180,7 @@ def movies():
 def recommendations():
     page = request.args.get('page', 1, type=int)
     userInput = []
-    ratingsuser = Ratings(userId=current_user.id)
+    ratingsuser = Ratings.objects(userId=current_user.id)
 
     for obj in ratingsuser:
         dit = {}
