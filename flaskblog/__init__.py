@@ -6,7 +6,7 @@ import os
 
 
 app = Flask(__name__)
-mongodbsrv = os.environ['MONGODBSRV']
+mongodbsrv = os.environ['MYDBCONN']
 app.config['SECRET_KEY'] = 'secret stuff'
 app.config['MONGODB_SETTINGS'] = {
     'host': mongodbsrv
