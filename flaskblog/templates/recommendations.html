@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for mv in recommendedmovies.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ mv.movieId }}</a>
+            </div>
+            <h2><a class="article-title" href=#>{{ mv.title }}</a></h2>
+          </div>
+        </article>
+    {% endfor %}
+
+    {% for page_num in recommendedmovies.iter_pages(left_edge= 1, right_edge= 1, left_current= 1, right_current= 2) %}
+        {% if page_num %}
+          {% if recommendedmovies.page == page_num %}
+            <a class= "btn btn-info mb-4 " href="{{url_for('recommendations', page= page_num)}}">{{page_num}}</a>
+          {% else %}
+            <a class= "btn btn-outline-info mb-4 " href="{{url_for('recommendations', page= page_num)}}">{{page_num}}</a>
+          {% endif %}
+        {% else %}
+          ...
+        {% endif %}
+    {% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for mv in movies.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ mv.movieId }}</a>
+            </div>
+            <h2><a class="article-title" href=#>{{ mv.title }}</a></h2>
+            <p class="article-content">Genres: </p>
+            {% for x in mv.genres %}
+                {{x.strip("''")}}&nbsp;
+            {% endfor %}
+
+            <form action="{{ url_for('movies', mvidb  = mv.id, page= movies.page)}}" method = "POST">
+              <label for="movieratings">Ratings</label>
+              <select id="movieratings" name="movieratings">
+                <option selected>{{tempr.filter(movieId= mv.id,userId= current_user.id).first().rating or "select choice"}}</option>
+                <option value=0>0</option>
+                <option value=0.5>0.5</option>
+                <option value=1>1.0</option>
+                <option value=1.5>1.5</option>
+                <option value=2>2.0</option>
+                <option value=2.5>2.5</option>
+                <option value=3>3.0</option>
+                <option value=3.5>3.5</option>
+                <option value=4>4.0</option>
+                <option value=4.5>4.5</option>
+                <option value=5>5.0</option>
+              </select>
+              <input type="submit">
+            </form>
+
+          </div>
+        </article>
+    {% endfor %}
+
+    {% for page_num in movies.iter_pages(left_edge= 1, right_edge= 1, left_current= 1, right_current= 2) %}
+        {% if page_num %}
+          {% if movies.page == page_num %}
+            <a class= "btn btn-info mb-4 " href="{{url_for('movies', page= page_num)}}">{{page_num}}</a>
+          {% else %}
+            <a class= "btn btn-outline-info mb-4 " href="{{url_for('movies', page= page_num)}}">{{page_num}}</a>
+          {% endif %}
+        {% else %}
+          ...
+        {% endif %}
+    {% endfor %}
+
+{% endblock content %}
