@@ -6,7 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from PIL import Image
 import secrets
 import os
-from flaskblog.mvrcsys import *
+from flaskblog.mvrcsys import mvlogic
 
 
 @app.route("/")
@@ -181,6 +181,8 @@ def recommendations():
     page = request.args.get('page', 1, type=int)
     userInput = []
     ratingsuser = Ratings.objects(userId=current_user.id)
+    if not ratingsuser:
+        return render_template('error.html')
 
     for obj in ratingsuser:
         dit = {}
@@ -197,7 +199,7 @@ def recommendations():
     #     {'title': 'Akira', 'rating': 4.5}
     # ]
 
-    result = getrecommendations(userInput)
+    result = mvlogic(userInput).getrecommendations()
 
     recommendedmovies = Moviesdb.objects(
         movieId__in=result).paginate(page=page, per_page=5)
